@@ -15,6 +15,7 @@ public class Unit : MonoBehaviour
     public void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        target = new Vector2(transform.position.x, transform.position.y);
     }
     public void Update()
     {
