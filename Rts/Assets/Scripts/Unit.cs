@@ -30,7 +30,7 @@ public class Unit : MonoBehaviour
             isSelected = false;
             spriteRenderer.color = new Color(255,255,255);
         }
-        if (Math.Abs(transform.position.x - target.x) > speed) // && Math.Abs(transform.position.y - target.y) > speed
+        if (Math.Abs(transform.position.x - target.x) > speed)
             Move();
         
     }
