@@ -20,7 +20,13 @@ public class Unit : MonoBehaviour
     public void Update()
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (Input.GetMouseButtonDown(0) && Math.Abs(transform.position.x - mousePos.x) < transform.localScale.x / 2 && Math.Abs(transform.position.y - mousePos.y) < transform.localScale.x / 2 && isSelected)
+        if (Input.GetMouseButtonDown(0) && isSelected && !(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
+        {
+            isSelected = false;
+            spriteRenderer.color = new Color(255, 255, 255);
+        }
+        else if (Input.GetMouseButtonDown(0) && Math.Abs(transform.position.x - mousePos.x) < transform.localScale.x / 2 && Math.Abs(transform.position.y - mousePos.y) < transform.localScale.x / 2 && 
+                isSelected && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
         {
             isSelected = false;
             spriteRenderer.color = new Color(255, 255, 255);
@@ -30,7 +36,7 @@ public class Unit : MonoBehaviour
             isSelected = true;
             spriteRenderer.color = new Color(255, 255, 0);
         }
-        
+
         if (Input.GetMouseButtonDown(1) && isSelected) 
         {
             target = mousePos;
