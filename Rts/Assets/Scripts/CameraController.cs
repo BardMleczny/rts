@@ -48,15 +48,14 @@ public class CameraController : MonoBehaviour
     void Zoom()
     {
         float zoomSpeed = 5.0f;
-        float minFOV = 3.0f;
-        float maxFOV = 10.0f;
+        float minZoom = 3.0f;
+        float maxZoom = 10.0f;
         float scrollInput = Input.GetAxis("Mouse ScrollWheel");
 
+        float newZoom = Camera.main.orthographicSize - scrollInput * zoomSpeed;
 
-        float newFOV = Camera.main.orthographicSize - scrollInput * zoomSpeed;
+        newZoom = Mathf.Clamp(newZoom, minZoom, maxZoom);
 
-        newFOV = Mathf.Clamp(newFOV, minFOV, maxFOV);
-
-        Camera.main.orthographicSize = newFOV;
+        Camera.main.orthographicSize = newZoom;
     }
 }
