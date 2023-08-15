@@ -34,7 +34,7 @@ public class CameraController : MonoBehaviour
             startingMousePos = Input.mousePosition;
         }
 
-        if (Input.mousePosition.x >= Screen.width - 50)
+        /*if (Input.mousePosition.x >= Screen.width - 50)
             transform.position += moveSpeed * Time.deltaTime * Vector3.right;
         if (Input.mousePosition.x <= 50)
             transform.position += moveSpeed * Time.deltaTime * Vector3.left;
@@ -42,12 +42,21 @@ public class CameraController : MonoBehaviour
             transform.position += moveSpeed * Time.deltaTime * Vector3.up;
         if (Input.mousePosition.y <= 50)
             transform.position += moveSpeed * Time.deltaTime * Vector3.down;
+        */
     }
 
     void Zoom()
     {
+        float zoomSpeed = 5.0f;
+        float minFOV = 3.0f;
+        float maxFOV = 10.0f;
         float scrollInput = Input.GetAxis("Mouse ScrollWheel");
 
-        Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView - scrollInput * zoomSpeed, minFOV, maxFOV);
+
+        float newFOV = Camera.main.orthographicSize - scrollInput * zoomSpeed;
+
+        newFOV = Mathf.Clamp(newFOV, minFOV, maxFOV);
+
+        Camera.main.orthographicSize = newFOV;
     }
 }
