@@ -10,8 +10,9 @@ public class Unit : MonoBehaviour
     SpriteRenderer spriteRenderer;
     public bool isSelected = false;
     Vector2 target;
-    float speed = 0.01f;
+    readonly float speed = 0.01f;
     Vector3 mousePos;
+    KeyCode groupId;
     public void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -23,29 +24,55 @@ public class Unit : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && isSelected && !(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
         {
             isSelected = false;
-            spriteRenderer.color = new Color(255, 255, 255);
         }
         else if (Input.GetMouseButtonDown(0) && Math.Abs(transform.position.x - mousePos.x) < transform.localScale.x / 2 && Math.Abs(transform.position.y - mousePos.y) < transform.localScale.x / 2 && 
                 isSelected && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
         {
             isSelected = false;
-            spriteRenderer.color = new Color(255, 255, 255);
         }
         else if (Input.GetMouseButtonDown(0) && Math.Abs(transform.position.x - mousePos.x) < transform.localScale.x / 2 && Math.Abs(transform.position.y - mousePos.y) < transform.localScale.x / 2) 
         { 
             isSelected = true;
-            spriteRenderer.color = new Color(255, 255, 0);
         }
 
         if (Input.GetMouseButtonDown(1) && isSelected) 
         {
             target = mousePos;
             isSelected = false;
-            spriteRenderer.color = new Color(255,255,255);
         }
         if (Math.Abs(transform.position.x - target.x) > speed)
             Move();
-        
+
+        KeyCode[] numbers = { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5 };
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            foreach (KeyCode keyCode in numbers)
+            {
+                if(Input.GetKeyDown(keyCode))
+                {
+                    if (isSelected)
+                        groupId = keyCode;
+                    else if(keyCode == groupId)
+                        groupId = KeyCode.None;
+                }
+            }
+        }
+
+        if(!Input.GetKey(KeyCode.LeftControl))
+        {
+            foreach (KeyCode keyCode in numbers)
+            {
+                if (Input.GetKeyDown(keyCode) && keyCode == groupId)
+                    isSelected = true;
+                else if (Input.GetKeyDown(keyCode) && keyCode != groupId && !(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
+                    isSelected = false;
+            }
+        }
+
+        if(isSelected)
+            spriteRenderer.color = new Color(255, 255, 0);
+        else
+            spriteRenderer.color = new Color(255, 255, 255);
     }
     public void Move()
     {
