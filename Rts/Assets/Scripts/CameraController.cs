@@ -44,7 +44,6 @@ public class CameraController : MonoBehaviour
             transform.position += moveSpeed * Time.deltaTime * Vector3.down;
         */
     }
-
     void Zoom()
     {
         float zoomSpeed = 5.0f;
