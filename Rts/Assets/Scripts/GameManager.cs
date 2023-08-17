@@ -10,14 +10,21 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
-            GenerateUnit();
+            GenerateUnit(true);
+        if (Input.GetKeyDown(KeyCode.G))
+            GenerateUnit(false);
     }
 
-    private void GenerateUnit()
+    /// <summary>
+    /// Generowanie jednostek
+    /// </summary>
+    /// <param name="teamToAdd"></param>
+    /// <returns>True dla dru¿yny gracza, false dla dru¿yny bota</returns>
+    private void GenerateUnit(bool teamToAdd)
     {
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = Camera.main.nearClipPlane;
         Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(mousePos);
-        Instantiate(Unit, worldMousePosition, Quaternion.identity);
+        Instantiate(Unit, worldMousePosition, Quaternion.identity).GetComponent<Unit>().isPlayerTeam = teamToAdd;
     }
 }
