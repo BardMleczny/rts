@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
     GameObject Unit;
+    [SerializeField]
+    Text knightsUi;
 
+    int availableKnights = 10;
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && availableKnights > 0)
             GenerateUnit(true);
         if (Input.GetKeyDown(KeyCode.G))
             GenerateUnit(false);
@@ -26,5 +30,8 @@ public class GameManager : MonoBehaviour
         mousePos.z = Camera.main.nearClipPlane;
         Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(mousePos);
         Instantiate(Unit, worldMousePosition, Quaternion.identity).GetComponent<Unit>().isPlayerTeam = teamToAdd;
+        availableKnights--;
+        knightsUi.text = availableKnights.ToString();
+        
     }
 }

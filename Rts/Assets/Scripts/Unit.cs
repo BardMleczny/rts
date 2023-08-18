@@ -14,9 +14,11 @@ public class Unit : MonoBehaviour
     Vector3 mousePos;
     KeyCode groupId;
     public bool isPlayerTeam;
+    GameObject marker;
     
     public void Start()
     {
+        marker = transform.GetChild(0).gameObject;
         spriteRenderer = GetComponent<SpriteRenderer>();
         target = new Vector2(transform.position.x, transform.position.y);
     }
@@ -31,12 +33,7 @@ public class Unit : MonoBehaviour
                 Move();
         }
 
-        if(isSelected)
-            spriteRenderer.color = new Color(255, 255, 0);
-        else if(isPlayerTeam)
-            spriteRenderer.color = new Color(255, 255, 255);
-        else
-            spriteRenderer.color = new Color(255, 0, 0);
+        marker.SetActive(isSelected);
     }
 
     private void Move()
